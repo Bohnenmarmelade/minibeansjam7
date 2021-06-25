@@ -22,19 +22,33 @@ public class SpawnArea : MonoBehaviour
 
     public GameObject Spawn(GameObject spawningObject)
     {
-        Debug.Log(spawningObject.GetComponent<Collider2D>().bounds);
-        
-        
-        float x = Random.Range(_leftBoundary, _rightBoundary);
+        float extendX = 0;
+        float extendY = 0;
 
-        Vector3 pos = new Vector2(x, 0);
-        
-        GameObject g = Instantiate(spawningObject, pos, Quaternion.identity);
-        
-        float y = _posY + g.GetComponent<Collider2D>().bounds.extents.y;
-        pos = new Vector2(x, y);
-        g.transform.position = pos;
+        BoxCollider2D boxCollider2D = spawningObject.GetComponent<BoxCollider2D>();
+        CircleCollider2D circleCollider2D = spawningObject.GetComponent<CircleCollider2D>();
+        CapsuleCollider2D capsuleCollider2D = spawningObject.GetComponent<CapsuleCollider2D>();
 
-        return g;
+        if (boxCollider2D != null)
+        {
+            extendX = boxCollider2D.size.x / 2;
+            extendY = boxCollider2D.size.y / 2;
+        } else if (circleCollider2D)
+        {
+            extendX = circleCollider2D.radius;
+            extendY = circleCollider2D.radius;
+        } else if (capsuleCollider2D)
+        {
+            extendX = capsuleCollider2D.size.x / 2;
+            extendY = capsuleCollider2D.size.y / 2;
+        }
+        
+        spawningObject.GetComponent<CircleCollider2D>();
+        
+        float x = Random.Range(_leftBoundary + extendX, _rightBoundary - extendX);
+
+        Vector3 pos = new Vector2(x, _posY + extendY);
+        
+        return Instantiate(spawningObject, pos, Quaternion.identity);
     }
 }

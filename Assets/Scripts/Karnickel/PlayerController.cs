@@ -132,7 +132,6 @@ namespace Char {
 
             _isGrounded = false;
             _shouldJump = false;
-            Debug.Log("TEST");
             float x = paralyzationPushbackForce;
             float y = paralyzationPushbackForce * 2f;
             if (_isFacingRight)
