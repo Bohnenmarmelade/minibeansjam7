@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LevelController : MonoBehaviour
 {
@@ -26,6 +28,7 @@ public class LevelController : MonoBehaviour
     {
         _enemySpawnAreas = GameObject.FindGameObjectsWithTag("EnemySpawn").ToList();
         _playerSpawnAreas = GameObject.FindGameObjectsWithTag("PlayerSpawn").ToList();
+        _enemies = new List<GameObject>();
         
         SpawnAlice();
         SpawnEnemies();
@@ -43,7 +46,7 @@ public class LevelController : MonoBehaviour
     private void SpawnEnemies()
     {
         int enemyCount = enemiesPerLevelConfig[level];
-
+        
         for (int i = 0; i < enemyCount; i++)
         {
             //find random spawnArea
