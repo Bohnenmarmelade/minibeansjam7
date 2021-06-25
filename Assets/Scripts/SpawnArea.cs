@@ -6,29 +6,35 @@ using Random = UnityEngine.Random;
 
 public class SpawnArea : MonoBehaviour
 {
-    [SerializeField] private Transform leftBoundary;
-    [SerializeField] private Transform rightBoundary;
-
-    [SerializeField] private GameObject _gameObject;
-
-    public void Spawn()
-    {
-        //calculate random x between left and right boundary
-        //spawn _gameObject
-        //profit
-        var leftPosition = leftBoundary.transform.position;
-        var rightPosition = rightBoundary.transform.position;
-        
-        float x = Random.Range(leftPosition.x, rightPosition.x);
-        float y = (leftPosition.y + rightPosition.y) / 2;
-        
-        Vector3 pos = new Vector2(x, y);
-
-        Instantiate(_gameObject, pos, Quaternion.identity);
-    }
-
+    private float _leftBoundary;
+    private float _rightBoundary;
+    private float _posY;
+    
     private void Start()
     {
-        Spawn();
+        //find left and right boundary based on gameObjects box collider
+        BoxCollider2D boxCollider2D = gameObject.transform.parent.gameObject.GetComponent<BoxCollider2D>();
+        var bounds = boxCollider2D.bounds; //using bounds is ok because box collider is always parallel to world axes
+        _leftBoundary = bounds.center.x - bounds.extents.x;
+        _rightBoundary = bounds.center.x + bounds.extents.x;
+        _posY = bounds.center.y + bounds.extents.y;
+    }
+
+    public GameObject Spawn(GameObject spawningObject)
+    {
+        Debug.Log(spawningObject.GetComponent<Collider2D>().bounds);
+        
+        
+        float x = Random.Range(_leftBoundary, _rightBoundary);
+
+        Vector3 pos = new Vector2(x, 0);
+        
+        GameObject g = Instantiate(spawningObject, pos, Quaternion.identity);
+        
+        float y = _posY + g.GetComponent<Collider2D>().bounds.extents.y;
+        pos = new Vector2(x, y);
+        g.transform.position = pos;
+
+        return g;
     }
 }
