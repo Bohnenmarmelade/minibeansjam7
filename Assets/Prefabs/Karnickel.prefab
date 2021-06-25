@@ -156,6 +156,8 @@ MonoBehaviour:
   hasAirControl: 1
   extraJumpGravity: 3.2
   jumpDelay: 0.015
+  paralyzationDuration: 3
+  paralyzationPushbackForce: 82
 --- !u!114 &6399848201509912060
 MonoBehaviour:
   m_ObjectHideFlags: 0

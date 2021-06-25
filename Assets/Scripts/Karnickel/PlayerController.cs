@@ -14,8 +14,10 @@ namespace Char {
         [SerializeField] private Transform groundCheckTransform; // A position marking where to check if the player is grounded.
         [SerializeField] private float movementSmoothing;
         [SerializeField] private bool hasAirControl;
-        [SerializeField][Range(0f,25f)] private float extraJumpGravity = 0.2f;
+        [SerializeField] [Range(0f,25f)] private float extraJumpGravity = 0.2f;
         [SerializeField] [Range(0f, 0.5f)] private float jumpDelay = 0f;
+        [SerializeField] [Range(0f, 3f)] private float paralyzationDuration;
+        [SerializeField] [Range(0f, 200f)] private float paralyzationPushbackForce;
     
         private Animator _animator;
         private const float GroundedRadius = .2f;
@@ -24,6 +26,8 @@ namespace Char {
         private Vector3 _velocity = Vector3.zero;
         private float _jumpTime = 0;
         private bool _shouldJump = false;
+        private float _paralyzedTime = 0;
+        private bool _isParalyzed = false;
     
         private Rigidbody2D _rigidbody2D;
         private static readonly int Speed = Animator.StringToHash("Speed");
@@ -52,6 +56,16 @@ namespace Char {
         }
 
         public void Move(float move, bool jump) {
+            if (_isParalyzed)
+            {
+                if (_paralyzedTime + paralyzationDuration < Time.time)
+                {
+                    _isParalyzed = false;
+                }
+
+                return;
+            }
+            
             if (_isGrounded || hasAirControl) {
                 Vector3 targetVelocity = new Vector2(move * 100f, _rigidbody2D.velocity.y);
                 //smoothing movement
@@ -104,14 +118,31 @@ namespace Char {
         private void OnTriggerEnter2D(Collider2D other) {
             if (other.CompareTag("Alice")) {
                 Debug.Log("I touched Alice!");
+            } else if (other.CompareTag("Enemy"))
+            {
+                onEnemyTouch(other.gameObject);
             }
         }
 
-        private void OnTriggerExit2D(Collider2D other) {
-            /*if (other.CompareTag("Gate")) {
-                levelController.GateLeft();
-            }*/
+        private void onEnemyTouch(GameObject enemy)
+        {
+            Debug.Log("I touched Enemy!");
+            _isParalyzed = true;
+            _paralyzedTime = Time.time;
+
+            _isGrounded = false;
+            _shouldJump = false;
+            Debug.Log("TEST");
+            float x = paralyzationPushbackForce;
+            float y = paralyzationPushbackForce * 2f;
+            if (_isFacingRight)
+            {
+                x *= -1;
+            }
+            _rigidbody2D.velocity = Vector2.zero;
+            _rigidbody2D.AddForce(new Vector2(x, y));
         }
+
 
         private void Flip() {
             _isFacingRight = !_isFacingRight;

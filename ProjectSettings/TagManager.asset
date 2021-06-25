@@ -8,6 +8,7 @@ TagManager:
   - Alice
   - EnemySpawn
   - PlayerSpawn
+  - Enemy
   layers:
   - Default
   - TransparentFX
