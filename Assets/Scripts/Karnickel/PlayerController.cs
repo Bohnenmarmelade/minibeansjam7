@@ -10,7 +10,7 @@ namespace Char {
         
         [SerializeField] private float jumpForce = 100f;
     
-        [SerializeField] private LayerMask groundLayerMask;							// A mask determining what is ground to the character
+        [SerializeField] private LayerMask groundLayerMask; // A mask determining what is ground to the character
         [SerializeField] private Transform groundCheckTransform; // A position marking where to check if the player is grounded.
         [SerializeField] private float movementSmoothing;
         [SerializeField] private bool hasAirControl;
@@ -152,6 +152,8 @@ namespace Char {
             }
             _rigidbody2D.velocity = Vector2.zero;
             _rigidbody2D.AddForce(new Vector2(x, y));
+            
+            enemy.GetComponent<EnemyController>().TouchedAlice();
         }
 
 
