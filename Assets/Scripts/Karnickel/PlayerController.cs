@@ -117,10 +117,22 @@ namespace Char {
 
         private void OnTriggerEnter2D(Collider2D other) {
             if (other.CompareTag("Alice")) {
-                Debug.Log("I touched Alice!");
+                onAliceTouch(other.gameObject);
             } else if (other.CompareTag("Enemy"))
             {
                 onEnemyTouch(other.gameObject);
+            }
+        }
+
+        private void onAliceTouch(GameObject alice)
+        {
+            Debug.Log("I touched Alice!");
+            
+            AliceController aliceController = alice.GetComponent<AliceController>();
+            if (!aliceController.IsTouched)
+            {
+                aliceController.IsTouched = true;
+                EventManager.Instance.OnAliceTouched.Invoke();
             }
         }
 

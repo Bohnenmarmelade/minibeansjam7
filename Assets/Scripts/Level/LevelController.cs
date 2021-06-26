@@ -14,6 +14,7 @@ public class LevelController : MonoBehaviour
 
     [SerializeField] private int level = 1;
     [SerializeField] private int[] enemiesPerLevelConfig = new int[] {5, 10, 15, 18, 20, 22, 23, 24, 25};
+    [SerializeField] private float levelTime = 30000f;
 
     private List<GameObject> _enemySpawnAreas;
     private List<GameObject> _playerSpawnAreas;
@@ -22,16 +23,45 @@ public class LevelController : MonoBehaviour
 
     private GameObject player;
     private GameObject alice;
+
+    private float levelEndTime;
     
     
     void Start()
     {
+        EventManager eventManager = EventManager.Instance;
+        eventManager.OnAliceTouched.AddListener(OnAliceTouched);
+        
         _enemySpawnAreas = GameObject.FindGameObjectsWithTag("EnemySpawn").ToList();
         _playerSpawnAreas = GameObject.FindGameObjectsWithTag("PlayerSpawn").ToList();
         _enemies = new List<GameObject>();
-        
+
         SpawnAlice();
         SpawnEnemies();
+
+        levelEndTime = Time.time + levelTime;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager eventManager = EventManager.Instance;
+        eventManager.OnAliceTouched.RemoveListener(OnAliceTouched);
+    }
+
+    private void Update()
+    {
+        CheckLevelTimer();
+    }
+
+    private void CheckLevelTimer()
+    {
+        
+        if (levelEndTime < Time.time)
+        {
+            //game over
+            Debug.Log("Game Over!");
+            EventManager.Instance.OnGameOver.Invoke();
+        } 
     }
 
     private void SpawnAlice()
@@ -45,7 +75,7 @@ public class LevelController : MonoBehaviour
 
     private void SpawnEnemies()
     {
-        int enemyCount = enemiesPerLevelConfig[level];
+        int enemyCount = enemiesPerLevelConfig[level] - _enemies.Count;
         
         for (int i = 0; i < enemyCount; i++)
         {
@@ -59,6 +89,14 @@ public class LevelController : MonoBehaviour
             GameObject spawnedEnemy = spawnArea.Spawn(enemy);
             _enemies.Add(spawnedEnemy);
         }
+    }
+
+    private void OnAliceTouched()
+    {
+        Destroy(alice, 0);
+        level++;
+        SpawnAlice();
+        SpawnEnemies();
     }
 
 }
