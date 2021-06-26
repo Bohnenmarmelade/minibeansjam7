@@ -555,7 +555,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.51, z: -10}
+  m_LocalPosition: {x: 0, y: 1.27, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1969,7 +1969,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658602133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.51, z: -10}
+  m_LocalPosition: {x: 0, y: 1.27, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1543261095}
@@ -2600,7 +2600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6399848201509912049, guid: 23474a700d755d640a6ec4d6de7deca7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.51
+      value: 1.27
       objectReference: {fileID: 0}
     - target: {fileID: 6399848201509912049, guid: 23474a700d755d640a6ec4d6de7deca7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2649,10 +2649,10 @@ PrefabInstance:
     - target: {fileID: 6399848201509912051, guid: 23474a700d755d640a6ec4d6de7deca7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+      objectReference: {fileID: 21300000, guid: 571725eb645311340acbfd6a6bd51f02, type: 3}
     - target: {fileID: 6399848201509912051, guid: 23474a700d755d640a6ec4d6de7deca7, type: 3}
       propertyPath: m_Color.b
-      value: 0.051886797
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6399848201509912051, guid: 23474a700d755d640a6ec4d6de7deca7, type: 3}
       propertyPath: m_Color.g
@@ -2660,12 +2660,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6399848201509912051, guid: 23474a700d755d640a6ec4d6de7deca7, type: 3}
       propertyPath: m_Color.r
-      value: 0.38881174
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6399848201509912051, guid: 23474a700d755d640a6ec4d6de7deca7, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6399848201509912055, guid: 23474a700d755d640a6ec4d6de7deca7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: af5d0a1a4612b0047b373c1404b4d5bf, type: 2}
     - target: {fileID: 6399848201509912061, guid: 23474a700d755d640a6ec4d6de7deca7, type: 3}
       propertyPath: m_Size.x
       value: 1

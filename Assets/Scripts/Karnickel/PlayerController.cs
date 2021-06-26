@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Char {
     public class PlayerController : MonoBehaviour {
@@ -35,14 +36,25 @@ namespace Char {
         private static readonly int Jump = Animator.StringToHash("Jump");
         private float _paralyzeEndTime = 0;
 
+
+        private float _nextIdleClockAnimation = 0;
+        private static readonly int IdleClockTrigger = Animator.StringToHash("IdleClockTrigger");
+        private static readonly int IsFacingRight = Animator.StringToHash("isFacingRight");
+        private static readonly int DamageTrigger = Animator.StringToHash("DamageTrigger");
+        private static readonly int ParalyzeEndTrigger = Animator.StringToHash("ParalyzeEndTrigger");
+
         private void Awake() {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+
+            _nextIdleClockAnimation = Time.time + Random.Range(5f, 10f);
             //_attackController = GetComponent<AttackController>();
         }
 
 
-        private void FixedUpdate() {
+        private void Update() {
+            CheckIdleAnimation();
+            
             _isGrounded = false;
 
             Collider2D[] colliders =
@@ -56,12 +68,22 @@ namespace Char {
 
         }
 
+        private void CheckIdleAnimation()
+        {
+            if (_nextIdleClockAnimation < Time.time)
+            {
+                _nextIdleClockAnimation = Time.time + Random.Range(5f, 10f);
+                _animator.SetTrigger(IdleClockTrigger);
+            }
+        }
+
         public void Move(float move, bool jump) {
             if (_isParalyzed)
             {
                 if (_paralyzeEndTime < Time.time)
                 {
                     _isParalyzed = false;
+                    _animator.SetTrigger(ParalyzeEndTrigger);
                 }
 
                 return;
@@ -82,24 +104,18 @@ namespace Char {
         
             if (_isGrounded && jump) {
                 this._jumpTime = Time.time + jumpDelay;
-                //_animator.SetTrigger(Jump);
+                _animator.SetTrigger(Jump);
                 _shouldJump = true;
             }
         
             checkJump();
 
-            /*if (attack) {
-                _animator.SetTrigger(Attack);
-                int sign = _isFacingRight ? 1 : -1;
-                _attackController.Attack();
-                EventManager.TriggerEvent(Events.SFX_SCYTHE, "");
-            }*/
 
             if (_isGrounded) {
-                //_animator.SetBool(IsGrounded, true);
-                //_animator.SetFloat(Speed, Math.Abs(move));
+                _animator.SetBool(IsGrounded, true);
+                _animator.SetFloat(Speed, Math.Abs(move));
             } else {
-                //_animator.SetBool(IsGrounded, false);
+                _animator.SetBool(IsGrounded, false);
             
                 //add extra gravity just for jumps, feels better
                 Vector3 velocity = _rigidbody2D.velocity;
@@ -150,6 +166,9 @@ namespace Char {
         private void onEnemyTouch(GameObject enemy)
         {
             Debug.Log("I touched Enemy!");
+            
+            _animator.SetTrigger(DamageTrigger);
+            
             _isParalyzed = true;
             _paralyzeEndTime = Time.time + paralyzationDuration;
 
@@ -172,11 +191,7 @@ namespace Char {
 
         private void Flip() {
             _isFacingRight = !_isFacingRight;
-
-            var t = transform;
-            Vector3 s = t.localScale;
-            s.x *= -1;
-            t.localScale = s;
+            _animator.SetBool(IsFacingRight, _isFacingRight);
         }
     }
 }
