@@ -44,12 +44,16 @@ namespace Char {
         private static readonly int ParalyzeEndTrigger = Animator.StringToHash("ParalyzeEndTrigger");
         private static readonly int StunTrigger = Animator.StringToHash("StunTrigger");
 
+        private EventManager _eventManager;
+
         private void Awake() {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
 
             _nextIdleClockAnimation = Time.time + Random.Range(5f, 10f);
             //_attackController = GetComponent<AttackController>();
+
+            _eventManager = GameObject.FindObjectOfType<EventManager>();
         }
 
 
@@ -166,7 +170,7 @@ namespace Char {
             if (!aliceController.IsTouched)
             {
                 aliceController.Touched();
-                EventManager.Instance.OnAliceTouched.Invoke();
+                _eventManager.OnAliceTouched.Invoke();
             }
         }
 

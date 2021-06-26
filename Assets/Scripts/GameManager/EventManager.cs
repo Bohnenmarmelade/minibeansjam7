@@ -1,7 +1,7 @@
-using Framework;
+using UnityEngine;
 using UnityEngine.Events;
 
-public class EventManager : Singleton<EventManager>
+public class EventManager : MonoBehaviour
 {
     public UnityEvent OnGameStarted { get; } = new UnityEvent();
     public UnityEvent OnLevelUp { get; } = new UnityEvent();

@@ -33,12 +33,16 @@ public class LevelController : MonoBehaviour
     private float levelEndTime;
 
     private IndicatorBar _indicatorBar;
-    
+
+    private EventManager _eventManager;
+    private float _startGameAt = 0;
+    private bool _gameStarted = false;
+
     void Start()
     {
         _indicatorBar = GameObject.FindObjectOfType<IndicatorBar>();
-        EventManager eventManager = EventManager.Instance;
-        eventManager.OnAliceTouched.AddListener(OnAliceTouched);
+        _eventManager = GameObject.FindObjectOfType<EventManager>();
+        _eventManager.OnAliceTouched.AddListener(OnAliceTouched);
         
         _enemySpawnAreas = GameObject.FindGameObjectsWithTag("EnemySpawn").ToList();
         _playerSpawnAreas = GameObject.FindGameObjectsWithTag("PlayerSpawn").ToList();
@@ -46,41 +50,54 @@ public class LevelController : MonoBehaviour
         _hostileShrooms = new List<GameObject>();
         _friendlyShrooms = new List<GameObject>();
 
+        _startGameAt = Time.time + 1f;
+
+
+    }
+
+    private void StartGame()
+    {
         SpawnAlice();
         StartCoroutine(nameof(SpawnEnemies));
         StartCoroutine(nameof(SpawnHostileShrooms));
         
+        
         _indicatorBar.SetMaxTime(levelTime);
 
         levelEndTime = Time.time + levelTime;
+
+        _gameStarted = true;
     }
 
     private void OnDestroy()
     {
-        EventManager eventManager = EventManager.Instance;
-        eventManager.OnAliceTouched.RemoveListener(OnAliceTouched);
+        _eventManager.OnAliceTouched.RemoveListener(OnAliceTouched);
     }
 
     private void Update()
     {
-        _indicatorBar.SetTimeLeft(levelEndTime - Time.time);
-        CheckLevelTimer();
+        if (_gameStarted)
+        {
+            _indicatorBar.SetTimeLeft(levelEndTime - Time.time);
+            CheckLevelTimer();
+        } else if (_startGameAt < Time.time) {
+            StartGame();
+        }
     }
 
     private void CheckLevelTimer()
     {
         
-        if (levelEndTime < Time.time)
+        if (_gameStarted && levelEndTime < Time.time)
         {
             //game over
             Debug.Log("Game Over!");
-            EventManager.Instance.OnGameOver.Invoke();
+            _eventManager.OnGameOver.Invoke();
         } 
     }
 
     private void SpawnAlice()
     {
-        var spawnAreaIndex = Random.Range(0, _enemySpawnAreas.Count);
         SpawnArea spawnArea = _enemySpawnAreas[Random.Range(0, _enemySpawnAreas.Count)].GetComponent<SpawnArea>();
 
         alice = spawnArea.Spawn(alicePrefab);

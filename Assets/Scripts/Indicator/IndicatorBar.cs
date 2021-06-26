@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Framework;
 using UnityEngine;
 
 public class IndicatorBar : MonoBehaviour
@@ -29,7 +27,6 @@ public class IndicatorBar : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(Math.Floor(_time / _maxTime * 10));
         level = (int) Math.Floor(_time / _maxTime * 10);
         
         UpdateIndicators();
