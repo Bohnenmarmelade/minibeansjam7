@@ -42,6 +42,7 @@ namespace Char {
         private static readonly int IsFacingRight = Animator.StringToHash("isFacingRight");
         private static readonly int DamageTrigger = Animator.StringToHash("DamageTrigger");
         private static readonly int ParalyzeEndTrigger = Animator.StringToHash("ParalyzeEndTrigger");
+        private static readonly int StunTrigger = Animator.StringToHash("StunTrigger");
 
         private void Awake() {
             _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -146,6 +147,8 @@ namespace Char {
 
         private void onSporeTouch(GameObject spore)
         {
+            _animator.SetTrigger(StunTrigger);
+            
             _isParalyzed = true;
             _paralyzeEndTime = Time.time + shroomStunTime;
             _rigidbody2D.velocity = Vector2.zero;

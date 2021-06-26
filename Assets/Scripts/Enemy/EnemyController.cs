@@ -26,28 +26,48 @@ public class EnemyController : MonoBehaviour
 
     private bool _isAttack = false;
     private float _attackAndTime = 0;
-    
+
+    private bool _isFacingRight = true;
+
+    private Animator _animator;
+    private static readonly int Speed = Animator.StringToHash("Speed");
+    private static readonly int AttackTrigger = Animator.StringToHash("AttackTrigger");
+    private SpriteRenderer _spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _movementDirection = Random.Range(0, 2) == 0 ? -1 : 1;
+        if (_movementDirection < 0)
+        {
+            Flip();
+        }
         _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+
+        _animator = gameObject.GetComponent<Animator>();
     }
 
     void Update()
     {
         CheckPause();
         CheckAttack();
-    }
-
-    void FixedUpdate()
-    {
+        
         if (!_isPause && !_isAttack)
         {
-            CheckDirection();
             Walk();
+            CheckDirection();
+
+            if (_movementDirection < 0 && _isFacingRight)
+            {
+                Flip();
+            } else if (_movementDirection > 0 && !_isFacingRight)
+            {
+                Flip();
+            }
         }
     }
+
 
     private void CheckAttack()
     {
@@ -67,6 +87,7 @@ public class EnemyController : MonoBehaviour
 
     private void SetPause()
     {
+        _animator.SetFloat(Speed, 0f);
         _isPause = true;
         _pauseEndTime = Time.time + pauseTime;
     }
@@ -82,6 +103,7 @@ public class EnemyController : MonoBehaviour
                 _movementDirection = 1;
                 SetPause();
             }
+
         }
         else
         {
@@ -99,6 +121,7 @@ public class EnemyController : MonoBehaviour
     }
     private void Walk()
     {
+        _animator.SetFloat(Speed, walkSpeed);
         Vector3 targetVelocity = new Vector2(walkSpeed * _movementDirection, _rigidbody2D.velocity.y);
         //smoothing movement
         _rigidbody2D.velocity =
@@ -107,8 +130,18 @@ public class EnemyController : MonoBehaviour
 
     public void TouchedAlice(int fromDirX)
     {
+        _animator.SetTrigger(AttackTrigger);
+        _animator.SetFloat(Speed, 0);
         _isPause = false;
         _isAttack = true;
         _attackAndTime = Time.time + attackTime;
+    }
+    
+    private void Flip() {
+        _isFacingRight = !_isFacingRight;
+
+        _spriteRenderer.flipX = !_isFacingRight;
+        
+        
     }
 }

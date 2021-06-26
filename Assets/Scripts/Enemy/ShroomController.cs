@@ -12,18 +12,32 @@ public class ShroomController : MonoBehaviour
     [SerializeField] private GameObject sporePrefab;
 
     [SerializeField] private float spawnTime = 2f;
+
+    [SerializeField] private float animationOffset = .2f;
     
     private float _nextSpawnTime = 0;
+    private float _nextSpawnAnimationTime = 0;
+    private Animator _animator;
 
     private List<SporeController> _spores= new List<SporeController>();
+    private static readonly int ExplodeTrigger = Animator.StringToHash("ExplodeTrigger");
+
     private void Start()
     {
         StartCoroutine(nameof(SpawnSpores));
         _nextSpawnTime += spawnTime;
+        _nextSpawnAnimationTime = _nextSpawnTime - animationOffset;
+
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if (_nextSpawnAnimationTime < Time.time)
+        {
+            _nextSpawnAnimationTime += spawnTime;
+            _animator.SetTrigger(ExplodeTrigger);
+        }
         if (_nextSpawnTime < Time.time)
         {
             StartCoroutine(nameof(SpawnSpores));
