@@ -15,7 +15,7 @@ public class LevelController : MonoBehaviour
 
     [SerializeField] private int level = 1;
     [SerializeField] private int[] enemiesPerLevelConfig = new int[] {5, 10, 15, 18, 20, 22, 23, 24, 25};
-    [SerializeField] private float levelTime = 30000f;
+    [SerializeField] private float levelTime = 60f;
 
     [SerializeField] private int _hostileShroomAmount = 5;
     
@@ -31,10 +31,12 @@ public class LevelController : MonoBehaviour
     private GameObject alice;
 
     private float levelEndTime;
-    
+
+    private IndicatorBar _indicatorBar;
     
     void Start()
     {
+        _indicatorBar = GameObject.FindObjectOfType<IndicatorBar>();
         EventManager eventManager = EventManager.Instance;
         eventManager.OnAliceTouched.AddListener(OnAliceTouched);
         
@@ -47,6 +49,8 @@ public class LevelController : MonoBehaviour
         SpawnAlice();
         StartCoroutine(nameof(SpawnEnemies));
         StartCoroutine(nameof(SpawnHostileShrooms));
+        
+        _indicatorBar.SetMaxTime(levelTime);
 
         levelEndTime = Time.time + levelTime;
     }
@@ -59,6 +63,7 @@ public class LevelController : MonoBehaviour
 
     private void Update()
     {
+        _indicatorBar.SetTimeLeft(levelEndTime - Time.time);
         CheckLevelTimer();
     }
 
