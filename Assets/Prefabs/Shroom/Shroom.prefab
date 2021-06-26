@@ -205,7 +205,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 0.8828125}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -247,7 +247,7 @@ MonoBehaviour:
   - {fileID: 2254675775786452479}
   sporePrefab: {fileID: 1549974541159227271, guid: 64bf42493550b6746bc9e926ac471941, type: 3}
   spawnTime: 5
-  animationOffset: 0.5
+  animationOffset: 0.85
 --- !u!95 &-3450497460752298807
 Animator:
   serializedVersion: 3
@@ -285,7 +285,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 0.8828125}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

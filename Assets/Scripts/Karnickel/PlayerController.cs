@@ -81,6 +81,10 @@ namespace Char {
         public void Move(float move, bool jump) {
             if (_isParalyzed)
             {
+                if (_paralyzeEndTime - paralyzationDuration + .5 < Time.time && _isGrounded) {
+                    _animator.SetBool(IsGrounded, true);
+                }
+                
                 if (_paralyzeEndTime < Time.time)
                 {
                     _isParalyzed = false;
