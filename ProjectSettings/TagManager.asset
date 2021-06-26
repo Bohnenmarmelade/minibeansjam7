@@ -9,6 +9,7 @@ TagManager:
   - EnemySpawn
   - PlayerSpawn
   - Enemy
+  - Spore
   layers:
   - Default
   - TransparentFX
