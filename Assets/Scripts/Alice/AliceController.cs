@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class AliceController : MonoBehaviour
 {
+
+    private Animator _animator;
+    private static readonly int PuffTrigger = Animator.StringToHash("PuffTrigger");
     public bool IsTouched { get; set; } = false;
 
+    public void Touched()
+    {
+        Debug.Log("I was touched!");
+        IsTouched = true;
+        _animator.SetTrigger(PuffTrigger);
+    }
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        _animator = gameObject.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

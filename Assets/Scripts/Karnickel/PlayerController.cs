@@ -161,7 +161,7 @@ namespace Char {
             AliceController aliceController = alice.GetComponent<AliceController>();
             if (!aliceController.IsTouched)
             {
-                aliceController.IsTouched = true;
+                aliceController.Touched();
                 EventManager.Instance.OnAliceTouched.Invoke();
             }
         }

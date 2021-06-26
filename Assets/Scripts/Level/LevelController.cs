@@ -79,7 +79,6 @@ public class LevelController : MonoBehaviour
         SpawnArea spawnArea = _enemySpawnAreas[Random.Range(0, _enemySpawnAreas.Count)].GetComponent<SpawnArea>();
 
         alice = spawnArea.Spawn(alicePrefab);
-        Debug.Log(alice.GetComponent<Collider2D>().bounds);
     }
 
     private IEnumerator SpawnEnemies()
@@ -119,7 +118,7 @@ public class LevelController : MonoBehaviour
 
     private void OnAliceTouched()
     {
-        Destroy(alice, 0);
+        Destroy(alice, 1f);
         level++;
         SpawnAlice();
         StartCoroutine(nameof(SpawnEnemies));
