@@ -105,7 +105,7 @@ public class EnemyController : MonoBehaviour
             Vector3.SmoothDamp(_rigidbody2D.velocity, targetVelocity, ref _velocity, movementSmoothing);
     }
 
-    public void TouchedAlice()
+    public void TouchedAlice(int fromDirX)
     {
         _isPause = false;
         _isAttack = true;

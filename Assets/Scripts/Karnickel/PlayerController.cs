@@ -152,8 +152,10 @@ namespace Char {
             }
             _rigidbody2D.velocity = Vector2.zero;
             _rigidbody2D.AddForce(new Vector2(x, y));
+
+            Vector3 dir = (transform.position - enemy.transform.position).normalized;
             
-            enemy.GetComponent<EnemyController>().TouchedAlice();
+            enemy.GetComponent<EnemyController>().TouchedAlice((int) dir.x);
         }
 
 
