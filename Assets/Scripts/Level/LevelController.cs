@@ -11,15 +11,21 @@ public class LevelController : MonoBehaviour
     [SerializeField] private GameObject alicePrefab;
     
     [SerializeField] private List<GameObject> enemyPrefabs;
+    [SerializeField] private List<GameObject> hostileShroomPrefabs;
 
     [SerializeField] private int level = 1;
     [SerializeField] private int[] enemiesPerLevelConfig = new int[] {5, 10, 15, 18, 20, 22, 23, 24, 25};
     [SerializeField] private float levelTime = 30000f;
 
+    [SerializeField] private int _hostileShroomAmount = 5;
+    
+
     private List<GameObject> _enemySpawnAreas;
     private List<GameObject> _playerSpawnAreas;
     
     private List<GameObject> _enemies;
+    private List<GameObject> _hostileShrooms;
+    private List<GameObject> _friendlyShrooms;
 
     private GameObject player;
     private GameObject alice;
@@ -35,9 +41,12 @@ public class LevelController : MonoBehaviour
         _enemySpawnAreas = GameObject.FindGameObjectsWithTag("EnemySpawn").ToList();
         _playerSpawnAreas = GameObject.FindGameObjectsWithTag("PlayerSpawn").ToList();
         _enemies = new List<GameObject>();
+        _hostileShrooms = new List<GameObject>();
+        _friendlyShrooms = new List<GameObject>();
 
         SpawnAlice();
-        SpawnEnemies();
+        StartCoroutine(nameof(SpawnEnemies));
+        StartCoroutine(nameof(SpawnHostileShrooms));
 
         levelEndTime = Time.time + levelTime;
     }
@@ -73,7 +82,7 @@ public class LevelController : MonoBehaviour
         Debug.Log(alice.GetComponent<Collider2D>().bounds);
     }
 
-    private void SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
         int enemyCount = enemiesPerLevelConfig[level] - _enemies.Count;
         
@@ -88,6 +97,23 @@ public class LevelController : MonoBehaviour
             //spawn randomEnemyPrefab to randomSpawnArea and add to _enemies
             GameObject spawnedEnemy = spawnArea.Spawn(enemy);
             _enemies.Add(spawnedEnemy);
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator SpawnHostileShrooms()
+    {
+        for (int i = 0; i < _hostileShroomAmount; i++)
+        {
+            SpawnArea spawnArea = _enemySpawnAreas[Random.Range(0, _enemySpawnAreas.Count)].GetComponent<SpawnArea>();
+
+            GameObject shroom = hostileShroomPrefabs[Random.Range(0, hostileShroomPrefabs.Count)];
+
+            GameObject spawnedShroom = spawnArea.Spawn(shroom);
+            _hostileShrooms.Add(spawnedShroom);
+
+            yield return null;
         }
     }
 
@@ -96,7 +122,7 @@ public class LevelController : MonoBehaviour
         Destroy(alice, 0);
         level++;
         SpawnAlice();
-        SpawnEnemies();
+        StartCoroutine(nameof(SpawnEnemies));
     }
 
 }

@@ -243,7 +243,7 @@ MonoBehaviour:
   - {fileID: 2254675775719445940}
   - {fileID: 2254675776238728837}
   - {fileID: 2254675775786452479}
-  sporePrefab: {fileID: 0}
+  sporePrefab: {fileID: 1549974541159227271, guid: 64bf42493550b6746bc9e926ac471941, type: 3}
   spawnTime: 5
 --- !u!1 &2254675777140873165
 GameObject:
