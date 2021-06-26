@@ -18,6 +18,7 @@ namespace Char {
         [SerializeField] [Range(0f, 0.5f)] private float jumpDelay = 0f;
         [SerializeField] [Range(0f, 3f)] private float paralyzationDuration;
         [SerializeField] [Range(0f, 200f)] private float paralyzationPushbackForce;
+        [SerializeField] [Range(0f, 10f)] private float shroomStunTime = 1f;
     
         private Animator _animator;
         private const float GroundedRadius = .2f;
@@ -26,13 +27,13 @@ namespace Char {
         private Vector3 _velocity = Vector3.zero;
         private float _jumpTime = 0;
         private bool _shouldJump = false;
-        private float _paralyzedTime = 0;
         private bool _isParalyzed = false;
     
         private Rigidbody2D _rigidbody2D;
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
         private static readonly int Jump = Animator.StringToHash("Jump");
+        private float _paralyzeEndTime = 0;
 
         private void Awake() {
             _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -58,7 +59,7 @@ namespace Char {
         public void Move(float move, bool jump) {
             if (_isParalyzed)
             {
-                if (_paralyzedTime + paralyzationDuration < Time.time)
+                if (_paralyzeEndTime < Time.time)
                 {
                     _isParalyzed = false;
                 }
@@ -121,7 +122,17 @@ namespace Char {
             } else if (other.CompareTag("Enemy"))
             {
                 onEnemyTouch(other.gameObject);
+            } else if (other.CompareTag("Spore"))
+            {
+                onSporeTouch(other.gameObject);
             }
+        }
+
+        private void onSporeTouch(GameObject spore)
+        {
+            _isParalyzed = true;
+            _paralyzeEndTime = Time.time + shroomStunTime;
+            _rigidbody2D.velocity = Vector2.zero;
         }
 
         private void onAliceTouch(GameObject alice)
@@ -140,7 +151,7 @@ namespace Char {
         {
             Debug.Log("I touched Enemy!");
             _isParalyzed = true;
-            _paralyzedTime = Time.time;
+            _paralyzeEndTime = Time.time + paralyzationDuration;
 
             _isGrounded = false;
             _shouldJump = false;
