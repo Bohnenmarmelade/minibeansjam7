@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ShroomController : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class ShroomController : MonoBehaviour
     private void Start()
     {
         StartCoroutine(nameof(SpawnSpores));
-        _nextSpawnTime += spawnTime;
+        _nextSpawnTime += Random.Range(3f, 8f);
         _nextSpawnAnimationTime = _nextSpawnTime - animationOffset;
 
         _animator = GetComponent<Animator>();
