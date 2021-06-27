@@ -1202,10 +1202,15 @@ MonoBehaviour:
   - {fileID: 5735185865082875471, guid: 44b2532d7921e12429ef907af6cf6423, type: 3}
   hostileShroomPrefabs:
   - {fileID: 2254675777062857737, guid: 82d26516382b27c4e9a921cabca483e5, type: 3}
+  friendlyShroomPrefabs:
+  - {fileID: 5958454247208928350, guid: dd4161f0b3f9a3d448c6450d3cf7a0e2, type: 3}
+  - {fileID: 34403566080066260, guid: d9d2b976a68d56c4d8fab3e2b2ac5fbe, type: 3}
+  - {fileID: 5558619036555592300, guid: e592aeafebf18914db5c16061e2cf47c, type: 3}
   level: 0
   enemiesPerLevelConfig: 0100000003000000050000000a0000001400000016000000170000001800000019000000
   levelTime: 60
-  _hostileShroomAmount: 5
+  hostileShroomAmount: 5
+  friendlyShroomAmount: 20
 --- !u!4 &861513016
 Transform:
   m_ObjectHideFlags: 0

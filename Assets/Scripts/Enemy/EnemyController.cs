@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        _movementDirection = Random.Range(0, 2) == 0 ? -1 : 1;
+        _movementDirection = Random.value < .5f ? -1 : 1;
         if (_movementDirection < 0)
         {
             Flip();

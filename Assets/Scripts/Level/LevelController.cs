@@ -12,12 +12,14 @@ public class LevelController : MonoBehaviour
     
     [SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] private List<GameObject> hostileShroomPrefabs;
+    [SerializeField] private List<GameObject> friendlyShroomPrefabs;
 
     [SerializeField] private int level = 1;
     [SerializeField] private int[] enemiesPerLevelConfig = new int[] {5, 10, 15, 18, 20, 22, 23, 24, 25};
     [SerializeField] private float levelTime = 60f;
 
-    [SerializeField] private int _hostileShroomAmount = 5;
+    [SerializeField] private int hostileShroomAmount = 5;
+    [SerializeField] private int friendlyShroomAmount = 20;
     
 
     private List<GameObject> _enemySpawnAreas;
@@ -60,6 +62,7 @@ public class LevelController : MonoBehaviour
         SpawnAlice();
         StartCoroutine(nameof(SpawnEnemies));
         StartCoroutine(nameof(SpawnHostileShrooms));
+        StartCoroutine(nameof(SpawnFriendlyShrooms));
         
         
         _indicatorBar.SetMaxTime(levelTime);
@@ -125,7 +128,7 @@ public class LevelController : MonoBehaviour
 
     private IEnumerator SpawnHostileShrooms()
     {
-        for (int i = 0; i < _hostileShroomAmount; i++)
+        for (int i = 0; i < hostileShroomAmount; i++)
         {
             SpawnArea spawnArea = _enemySpawnAreas[Random.Range(0, _enemySpawnAreas.Count)].GetComponent<SpawnArea>();
 
@@ -133,6 +136,25 @@ public class LevelController : MonoBehaviour
 
             GameObject spawnedShroom = spawnArea.Spawn(shroom);
             _hostileShrooms.Add(spawnedShroom);
+
+            yield return null;
+        }
+    }
+    
+    private IEnumerator SpawnFriendlyShrooms()
+    {
+        for (int i = 0; i < friendlyShroomAmount; i++)
+        {
+            SpawnArea spawnArea = _enemySpawnAreas[Random.Range(0, _enemySpawnAreas.Count)].GetComponent<SpawnArea>();
+
+            GameObject shroom = friendlyShroomPrefabs[Random.Range(0, friendlyShroomPrefabs.Count)];
+
+            GameObject spawnedShroom = spawnArea.Spawn(shroom);
+            if (Random.value < .5f)
+            {
+                spawnedShroom.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            _friendlyShrooms.Add(spawnedShroom);
 
             yield return null;
         }
