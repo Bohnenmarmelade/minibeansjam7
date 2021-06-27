@@ -35,14 +35,17 @@ public class LevelController : MonoBehaviour
     private float levelEndTime;
 
     private IndicatorBar _indicatorBar;
-
+    private CatController _catController;
+    
     private EventManager _eventManager;
     private float _startGameAt = 0;
     private bool _gameStarted = false;
 
+    
     void Start()
     {
         _indicatorBar = GameObject.FindObjectOfType<IndicatorBar>();
+        _catController = GameObject.FindObjectOfType<CatController>();
         _eventManager = GameObject.FindObjectOfType<EventManager>();
         _eventManager.OnAliceTouched.AddListener(OnAliceTouched);
         
@@ -53,6 +56,8 @@ public class LevelController : MonoBehaviour
         _friendlyShrooms = new List<GameObject>();
 
         _startGameAt = Time.time + 1f;
+        
+        Debug.Log(_enemySpawnAreas);
 
 
     }
@@ -101,9 +106,12 @@ public class LevelController : MonoBehaviour
 
     private void SpawnAlice()
     {
+        Debug.Log(_enemySpawnAreas.Count);
         SpawnArea spawnArea = _enemySpawnAreas[Random.Range(0, _enemySpawnAreas.Count)].GetComponent<SpawnArea>();
 
         alice = spawnArea.Spawn(alicePrefab);
+        
+        _catController.NextAlice();
     }
 
     private IEnumerator SpawnEnemies()

@@ -27,7 +27,6 @@ public class KarnickelFXController : MonoBehaviour
     {
         if (nextTooLate < Time.time)
         {
-            Debug.Log("Playing: Too Late");
             AudioClip clip = tooLateClips[Random.Range(0, tooLateClips.Count)];
             tooLateSource.PlayOneShot(clip);
             nextTooLate = Time.time + Random.Range(5f, 20f);
@@ -46,7 +45,6 @@ public class KarnickelFXController : MonoBehaviour
     {
         if (!_isTapping)
         {
-            Debug.Log("Playing: Tap");
             tapSource.clip = tapClip;
             tapSource.Play();
             tapSource.loop = true;
@@ -56,7 +54,6 @@ public class KarnickelFXController : MonoBehaviour
 
     public void StopTap()
     {
-        Debug.Log("Stop: Tap");
         tapSource.Stop();
         _isTapping = false;
 
