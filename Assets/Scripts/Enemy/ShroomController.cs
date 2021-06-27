@@ -21,6 +21,7 @@ public class ShroomController : MonoBehaviour
     private List<SporeController> _spores= new List<SporeController>();
     private static readonly int ExplodeTrigger = Animator.StringToHash("ExplodeTrigger");
 
+    private ShroomFXController _fxController;
     private void Start()
     {
         StartCoroutine(nameof(SpawnSpores));
@@ -28,6 +29,7 @@ public class ShroomController : MonoBehaviour
         _nextSpawnAnimationTime = _nextSpawnTime - animationOffset;
 
         _animator = GetComponent<Animator>();
+        _fxController = gameObject.GetComponent<ShroomFXController>();
     }
 
     private void Update()
@@ -36,6 +38,7 @@ public class ShroomController : MonoBehaviour
         {
             _nextSpawnAnimationTime += spawnTime;
             _animator.SetTrigger(ExplodeTrigger);
+            _fxController.Fart();
         }
         if (_nextSpawnTime < Time.time)
         {
