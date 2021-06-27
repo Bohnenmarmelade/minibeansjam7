@@ -50,16 +50,17 @@ public class IndicatorBar : MonoBehaviour
 
     private void Start()
     {
-        InitIndicators();   
+        //InitIndicators();   
     }
 
     private void InitIndicators()
     {
-        Vector2 pos = startPoint.transform.position;
+        Vector3 pos = startPoint.transform.position;
+        pos.z = 1;
         foreach (Indicator indicator in indicators)
         {
             indicator.transform.position = pos;
-            pos += new Vector2(_offset, 0);
+            pos += new Vector3(_offset, 0, 0);
         }
     }
 }
