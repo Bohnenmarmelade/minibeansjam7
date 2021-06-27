@@ -1230,6 +1230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 884830748}
   - component: {fileID: 884830749}
+  - component: {fileID: 884830750}
   m_Layer: 0
   m_Name: Baumkrone
   m_TagString: Untagged
@@ -1302,6 +1303,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &884830750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884830747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f5c5fafbbe24649b4a18a039f367a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parallaxAmount: 8.5
 --- !u!1 &1136881845
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,6 +2499,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1554760720}
   - component: {fileID: 1554760721}
+  - component: {fileID: 1554760722}
   m_Layer: 0
   m_Name: "B\xE4ume_Dunkel_2"
   m_TagString: Untagged
@@ -2557,6 +2572,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1554760722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554760719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f5c5fafbbe24649b4a18a039f367a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parallaxAmount: 6.5
 --- !u!1 &1589563652
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,6 +2977,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1681599244}
   - component: {fileID: 1681599245}
+  - component: {fileID: 1681599246}
   m_Layer: 0
   m_Name: Baumkrone_Hintergrund
   m_TagString: Untagged
@@ -3021,6 +3050,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1681599246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681599243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f5c5fafbbe24649b4a18a039f367a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parallaxAmount: 6.5
 --- !u!1 &1802176138
 GameObject:
   m_ObjectHideFlags: 0
@@ -3131,6 +3173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1828954921}
   - component: {fileID: 1828954922}
+  - component: {fileID: 1828954923}
   m_Layer: 0
   m_Name: "B\xE4ume_Blau"
   m_TagString: Untagged
@@ -3203,6 +3246,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1828954923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828954920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f5c5fafbbe24649b4a18a039f367a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parallaxAmount: 4
 --- !u!1 &1912198923
 GameObject:
   m_ObjectHideFlags: 0
@@ -3769,6 +3825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2075923557}
   - component: {fileID: 2075923558}
+  - component: {fileID: 2075923559}
   m_Layer: 0
   m_Name: "B\xE4ume_Dunkel_3"
   m_TagString: Untagged
@@ -3841,6 +3898,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2075923559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075923556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f5c5fafbbe24649b4a18a039f367a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parallaxAmount: 8.5
 --- !u!4 &2083881687 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2071606542915299792, guid: 2351925558f63dd4092be34f9dbe0464, type: 3}
