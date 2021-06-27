@@ -10,6 +10,8 @@ public class Menu : MonoBehaviour
     
     private float _loadGameAt = 0f;
     private bool _loadGame = false;
+    private float _loadTutorialAt = 0f;
+    private bool _loadTutorial = false;
 
     private void Start()
     {
@@ -23,6 +25,19 @@ public class Menu : MonoBehaviour
             _loadGame = false;
             _eventManager.OnGameStarted.Invoke();
         }
+
+        if (_loadTutorial && _loadTutorialAt < Time.time)
+        {
+            _loadTutorial = false;
+            _eventManager.OnTutorialStarted.Invoke();
+        }
+    }
+
+    public void LoadTutorial()
+    {
+        
+        _loadTutorial = true;
+        _loadTutorialAt = Time.time + .2f;
     }
 
     public void LoadGame()
