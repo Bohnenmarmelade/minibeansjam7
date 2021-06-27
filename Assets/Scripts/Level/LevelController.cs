@@ -166,6 +166,8 @@ public class LevelController : MonoBehaviour
     {
         Destroy(alice, 1f);
         level++;
+        levelEndTime += 10f;
+        _indicatorBar.SetTimeLeft(levelEndTime - Time.time);
         SpawnAlice();
         StartCoroutine(nameof(SpawnEnemies));
     }

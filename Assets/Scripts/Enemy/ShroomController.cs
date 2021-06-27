@@ -25,7 +25,6 @@ public class ShroomController : MonoBehaviour
     private ShroomFXController _fxController;
     private void Start()
     {
-        StartCoroutine(nameof(SpawnSpores));
         _nextSpawnTime += Random.Range(3f, 8f);
         _nextSpawnAnimationTime = _nextSpawnTime - animationOffset;
 
