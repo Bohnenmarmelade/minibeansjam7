@@ -45,6 +45,7 @@ namespace Char {
         private static readonly int StunTrigger = Animator.StringToHash("StunTrigger");
 
         private EventManager _eventManager;
+        private KarnickelFXController _fxController;
 
         private void Awake() {
             _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -54,11 +55,12 @@ namespace Char {
             //_attackController = GetComponent<AttackController>();
 
             _eventManager = GameObject.FindObjectOfType<EventManager>();
+            _fxController = gameObject.GetComponent<KarnickelFXController>();
         }
 
 
         private void Update() {
-            CheckIdleAnimation();
+            CheckIdleStuff();
             
             _isGrounded = false;
 
@@ -73,16 +75,24 @@ namespace Char {
 
         }
 
-        private void CheckIdleAnimation()
+        private void CheckIdleStuff()
         {
             if (_nextIdleClockAnimation < Time.time)
             {
                 _nextIdleClockAnimation = Time.time + Random.Range(5f, 10f);
                 _animator.SetTrigger(IdleClockTrigger);
+                _fxController.StopTap();
             }
         }
 
         public void Move(float move, bool jump) {
+            if (move != 0)
+            {
+                _fxController.StopTap();
+            } else if (_isGrounded && !_isParalyzed)
+            {
+                _fxController.StartTap();
+            }
             if (_isParalyzed)
             {
                 if (_paralyzeEndTime - paralyzationDuration + .5 < Time.time && _isGrounded) {
@@ -155,6 +165,7 @@ namespace Char {
 
         private void onSporeTouch(GameObject spore)
         {
+            _fxController.Ow();
             _animator.SetTrigger(StunTrigger);
             
             _isParalyzed = true;
@@ -178,6 +189,7 @@ namespace Char {
         {
             Debug.Log("I touched Enemy!");
             
+            _fxController.Ow();
             _animator.SetTrigger(DamageTrigger);
             
             _isParalyzed = true;
