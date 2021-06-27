@@ -34,9 +34,12 @@ public class EnemyController : MonoBehaviour
     private static readonly int AttackTrigger = Animator.StringToHash("AttackTrigger");
     private SpriteRenderer _spriteRenderer;
 
+    private EnemyFXController _fxController;
+
     // Start is called before the first frame update
     void Start()
     {
+        _fxController = gameObject.GetComponent<EnemyFXController>();
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _movementDirection = Random.value < .5f ? -1 : 1;
         if (_movementDirection < 0)
@@ -87,6 +90,7 @@ public class EnemyController : MonoBehaviour
 
     private void SetPause()
     {
+        _fxController.StopWalk();
         _animator.SetFloat(Speed, 0f);
         _isPause = true;
         _pauseEndTime = Time.time + pauseTime;
@@ -121,6 +125,7 @@ public class EnemyController : MonoBehaviour
     }
     private void Walk()
     {
+        _fxController.StartWalk();
         _animator.SetFloat(Speed, walkSpeed);
         Vector3 targetVelocity = new Vector2(walkSpeed * _movementDirection, _rigidbody2D.velocity.y);
         //smoothing movement
@@ -135,6 +140,8 @@ public class EnemyController : MonoBehaviour
         _isPause = false;
         _isAttack = true;
         _attackAndTime = Time.time + attackTime;
+        
+        _fxController.Attack();
     }
     
     private void Flip() {
