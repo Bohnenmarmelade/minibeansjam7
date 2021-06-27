@@ -34,8 +34,21 @@ public class CatController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector3 dir = (_alice.transform.position - _player.transform.position).normalized;
+        if (_alice == null)
+        {
+            return;
+        }
+        Vector3 a = _alice.transform.position;
+        Vector3 b = _player.transform.position;
+
+        a.z = 0;
+        b.z = 0;
+
+        Vector3 dir = (a - b).normalized;
+        
+        
         Vector3 newDir = SnapTo(dir, 45f);
+        Debug.Log(newDir);
         SetCorrectSprite(newDir);
     }
 

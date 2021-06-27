@@ -56,10 +56,6 @@ public class LevelController : MonoBehaviour
         _friendlyShrooms = new List<GameObject>();
 
         _startGameAt = Time.time + 1f;
-        
-        Debug.Log(_enemySpawnAreas);
-
-
     }
 
     private void StartGame()
@@ -98,8 +94,6 @@ public class LevelController : MonoBehaviour
         
         if (_gameStarted && levelEndTime < Time.time)
         {
-            //game over
-            Debug.Log("Game Over!");
             _eventManager.OnGameOver.Invoke();
         } 
     }

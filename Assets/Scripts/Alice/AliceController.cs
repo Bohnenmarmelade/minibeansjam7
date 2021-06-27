@@ -11,7 +11,6 @@ public class AliceController : MonoBehaviour
 
     public void Touched()
     {
-        Debug.Log("I was touched!");
         IsTouched = true;
         _animator.SetTrigger(PuffTrigger);
         _fxController.Explode();
